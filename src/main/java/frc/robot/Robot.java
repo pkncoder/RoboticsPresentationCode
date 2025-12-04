@@ -12,8 +12,8 @@ import edu.wpi.first.wpilibj.XboxController;
 public class Robot extends TimedRobot {
 
   // Name our motors
-  TalonFX motorLeft = new TalonFX(0);
-  TalonFX motorRight = new TalonFX(1);
+  TalonFX motorLeft = new TalonFX(1);
+  TalonFX motorRight = new TalonFX(3);
 
   // Name our controller
   XboxController controller = new XboxController(0);
@@ -24,11 +24,36 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotPeriodic() {
+    
+    // Get the stick values from the controller
     double leftStickInput = controller.getLeftY();
     double rightStickInput = -controller.getRightY();
 
-    motorLeft.set(leftStickInput);
-    motorRight.set(rightStickInput);
+    // If the left stick is moved at all...
+    if (Math.abs(leftStickInput) > 0.1) {
+      // Move the left motor by the amount that the stick is pushed by
+      motorLeft.set(leftStickInput);
+    } 
+
+    // If the left stick is not moved at all...
+    else {
+      // Dont move the left motor
+      motorLeft.set(0.0);
+    }
+
+
+
+    // If the right stick is not moved at all...
+    if (Math.abs(rightStickInput) > 0.1) {
+      // Move the right motor by the amount that the stick is pushed by
+      motorRight.set(rightStickInput);
+    } 
+
+    // If the right stick is not moved at all...
+    else {
+      // Dont move the right motor
+      motorRight.set(0.0);
+    }
   }
 
   @Override
