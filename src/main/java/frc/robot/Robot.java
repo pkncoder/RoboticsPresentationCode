@@ -18,8 +18,19 @@ public class Robot extends TimedRobot {
   // Name our controller
   XboxController controller = new XboxController(0);
 
+  @SuppressWarnings("removal")
   public Robot() {
-    
+
+    // Invert the Right Motor
+    motorRight.setInverted(true);
+
+    /*
+     * motor.setInverted() is being removed, here's the new way of doing it
+     * 
+     * MotorOutputConfigs motorRightConfigs = new MotorOutputConfigs();
+     * motorRightConfigs.Inverted = InvertedValue.CounterClockwise_Positive;
+     * motorRight.getConfigurator().apply(motorRightConfigs);
+     */
   }
 
   @Override
@@ -27,7 +38,7 @@ public class Robot extends TimedRobot {
     
     // Get the stick values from the controller
     double leftStickInput = controller.getLeftY();
-    double rightStickInput = -controller.getRightY();
+    double rightStickInput = controller.getRightY();
 
     // If the left stick is moved at all...
     if (Math.abs(leftStickInput) > 0.1) {
